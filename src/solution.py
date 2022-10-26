@@ -11,10 +11,11 @@ model = AutoModelForTokenClassification.from_pretrained("./models/model/")
 
 ner = pipeline('ner', model=model, tokenizer=tokenizer, aggregation_strategy="simple")
 
-sample_event = "Jojo Mayer / Nerve w/ DJ HA at MilkBoy 3/15"
+sample_event = "Gods & Monsters: AkaAka, Kröcher / Modestep, Ganz, Bare Noize / Drumcomplex"
 
+sample_event = utils.clean_sentence(sample_event)
 entities = ner(sample_event)
-json_out = utils.check_entities(entities, ner)
+json_out = utils.check_entities(entities, ner, sample_event)
 
 print("Entities:",entities)
 print("JSON_OUTPUT:",json_out)
