@@ -52,7 +52,8 @@ def check_entities(entities, ner, event_title):
     for entity in entities:
         
         label= entity['entity_group']
-        
+        logger.info(f"Entity: {entity}")
+
         if label == 'PER':
             output = check_person(entity, output)
         elif label == 'LOC':
@@ -70,7 +71,7 @@ def check_entities(entities, ner, event_title):
     return output
 
 def update_db(person):
-    # updates databse with new artists
+    # updates database with new artists
     with open(ARTISTS_DB, "a+", encoding='utf-8') as file:
         file.seek(0)
         database = file.read()
@@ -330,7 +331,8 @@ def extract_new_entities(entity, ner, mode=None):
 def process_new_entities(new_entities, ner, event_title, output):
     # function to check and classify newly found entities
     for new_entity in new_entities:
-        
+
+        logger.info(f"Entity: {new_entity}")
         label= new_entity['entity_group']
         
         if label == 'PER':
