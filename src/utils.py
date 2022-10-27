@@ -21,12 +21,11 @@ logging.basicConfig(filename = f'logs/{dt_string}_run_log.log',
                     level=logging.INFO)
 logger = logging.getLogger()
 
-def clean_sentence(val):
+def clean_sentence(sentence):
     # removes weird characters and adds sense to sentences
-    regex = re.compile('^»«•~✦<>')
-    sentence = regex.sub('', val)
+    
     sentence = sentence.replace('w/','with')
-    sentence = sentence.replace(' w ','with')
+    sentence = sentence.replace(' w ',' with ')
     sentence = sentence.replace('@','at ')
     sentence = sentence.replace('~',', ')
     sentence = sentence.replace(' • ',' | ')
