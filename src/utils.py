@@ -8,7 +8,7 @@ from datetime import datetime
 
 ARTISTS_DB = './data/artists_db.txt'
 
-# setting up logging
+""" # setting up logging
 now = datetime.now()
 dt_string = now.strftime("%d%m%Y_%H%M%S")
         
@@ -19,7 +19,7 @@ if not osp.exists(save_path):
 logging.basicConfig(filename = f'logs/{dt_string}_run_log.log',
                     format='%(asctime)s : %(levelname)s : %(message)s',
                     level=logging.INFO)
-logger = logging.getLogger()
+logger = logging.getLogger() """
 
 def clean_sentence(val):
     # removes weird characters and adds sense to sentences
@@ -46,116 +46,175 @@ def update_db(person):
             file.write ("\n"+person)
         file.close()
 
-def check_db(entity, ner, mode='outer'):
-    # checks database if artist is present based on presence, word distances and confidence scores
-    potential_artist, label, confidence_score = entity['word'], entity['entity_group'], entity['score']
+def check_db(potential_artist):
     
-    is_present= False
-    is_weird = False
-    new_entities = []
+    method = None
     
     with open("data/artists_db.txt", encoding="utf8") as file:
         artists_db = file.read().split("\n")
         file.close() 
-    
-    if mode=='outer':
-        # triggered when ner is performed for the first time in check_entities; capable of checking database and identifying new entities
-        # returns boolean values and potential new entities
-        if potential_artist in artists_db:
-            logger.info(f"Present in DB: list check --> {potential_artist}")
-            print("Present in DB: list check --> ",potential_artist)
-            is_present= True
-
-        else:
-            for artists in artists_db:
-                if levenshtein_distance(artists,potential_artist) <2 :
-                    logger.info(f"Present in DB: distance check : {artists}, {potential_artist}")
-                    print("Present in DB: distance check")
-                    print(artists,potential_artist)       
-                    is_present= True
-                    
-                    break
-            
-                elif len(potential_artist) > 15 and label == 'MISC' and confidence_score < 0.90 and confidence_score > 0.60:
-                    if artists+' ' in potential_artist or artists+',' in potential_artist or artists+'/' in potential_artist:
-                        logger.info(f"Artist present in parts of sentence : {artists}, {potential_artist}")
-                        print("Artist present in parts of sentence")
-                        print(artists,potential_artist.replace(artists,"").lstrip())
-                        new_words = [artists,potential_artist.replace(artists,"").lstrip()]
-                        for word in new_words:
-                            try:
-                                new_entities.append(ner(word)[0])
-                            except:
-                                pass
-
-                        is_present= False
-                        is_weird = True
-                        
-        del potential_artist, label, confidence_score
-        return is_present, is_weird, new_entities
-    
-    elif mode == 'inner':
-        # triggered when ner is performed for the second time in process_new_entities; not capable of identifying new entities
-        # returns boolean value based on the presence of artist in the database
-        if potential_artist in artists_db:
-            print("Present in DB: list check --> ",potential_artist)
-            logger.info(f"Present in DB: list check --> {potential_artist}")
-
-            is_present= True
-
-        else:
-            for artists in artists_db:
-                if levenshtein_distance(artists,potential_artist) <2 :
-                    logger.info(f"Present in DB: distance check : {artists}, {potential_artist}")
-                    print("Present in DB: distance check")
-                    print(artists,potential_artist)       
-                    is_present= True
-                    break        
         
-        del potential_artist, label, confidence_score
-        return is_present
+    if potential_artist in artists_db:
+        #logger.info(f"Present in DB: list check --> {potential_artist}")
+        print("Present in DB: list check --> ",potential_artist)
 
-def assign_labels(entity,output):
-    # assigns final labels to extracted entities based on existing labels and confidence scores
-    event_info, label, confidence_score = entity['word'], entity['entity_group'], entity['score']
+        method = 'present'
+
+    else:
+        for artists in artists_db:
+            if levenshtein_distance(artists,potential_artist) <2 :
+                #logger.info(f"Present in DB: distance check : {artists}, {potential_artist}")
+                print("Present in DB: distance check")
+                print(artists,potential_artist)      
+                method = 'distance'
+                break        
+
+    return method
+
+def check_location(entity, output):
     
-    if label == 'PER' and confidence_score > 0.75:
-        output['artists'].append(event_info)
-        update_db(event_info)
-    elif label == 'PER' and confidence_score < 0.75 and confidence_score > 0.60:
-        output['artists'].append(event_info)               
-    elif label == 'ORG':
-        output['events'].append(event_info)
-    elif label == 'MISC'and len(event_info) >= 2:
-        output['events'].append(event_info)
-    elif label == 'LOC':
-        output['location'].append(event_info)
+    potential_location, confidence_score = entity['word'], entity['score']
+    
+    if confidence_score > 0.70:
+        output['location'].append(potential_location)
         
-    del event_info, label, confidence_score
+    elif check_db(potential_location) == 'present':
+        output['artist'].append(potential_location)
+        
+    elif check_db(potential_location) == 'distance' and confidence_score > 0.60:
+        output['event_info'].append(potential_location)
+        
+    else:
+        output['related_keywords'].append(potential_location)
+        
+    del potential_location, confidence_score
     return output
 
-def process_new_entities(new_entities, ner, output):
-    # function to process newly extracted entities from check_db - outer mode
+def check_person(entity, output):
+    
+    potential_artist, confidence_score = entity['word'], entity['score']
+    
+    database_check = check_db(potential_artist)
+    
+    if database_check == 'present':
+        output['artists'].append(potential_artist)
+        
+    elif database_check == 'distance' and confidence_score > 0.60:
+        output['artists'].append(potential_artist)
+        
+    elif confidence_score > 0.75:
+        output['artists'].append(potential_artist)
+        update_db(potential_artist)
+        
+    elif confidence_score < 0.75 and confidence_score > 0.60:
+        output['artists'].append(potential_artist)
+
+    else:
+        output['related_keywords'].append(potential_artist)
+        
+    del potential_artist, confidence_score, database_check 
+    return output
+
+def check_org(entity, output):
+
+    event_info, confidence_score = entity['word'], entity['score']
+
+    database_check = check_db(event_info)
+    
+    if database_check == 'present':
+        output['artists'].append(event_info)
+        
+    elif database_check == 'distance' and confidence_score > 0.60:
+        output['artists'].append(event_info)
+        
+    elif confidence_score > 0.70:
+        output['event_info'].append(event_info)
+        
+    else:
+        output['related_keywords'].append(event_info)
+        
+    del event_info, confidence_score, database_check 
+    return output
+
+def check_misc(entity, ner, event_title, output, mode=None):
+    
+    event_info, confidence_score = entity['word'], entity['score']
+    misc_ratio = len(event_info)/len(event_title)
+    
+    database_check = check_db(event_info)
+    
+    if len(event_info) < 2:
+        output['related_keywords'].append(event_info)
+    
+    elif database_check == 'present':
+        output['artists'].append(event_info)
+        
+    elif database_check == 'distance' and confidence_score > 0.60:
+        output['artists'].append(event_info)
+        
+    elif misc_ratio > 0.70 and confidence_score < 0.90 and confidence_score > 0.50 and mode=='outer':
+        is_present, new_entities = extract_new_entities(entity, ner)
+        if is_present:
+            output = process_new_entities(new_entities, ner, event_title, output)
+        else:
+            output['related_keywords'].append(event_info)
+            
+        del is_present, new_entities
+        
+    else:
+        output['related_keywords'].append(event_info)
+        
+    del event_info, confidence_score, misc_ratio, database_check 
+    return output
+
+def extract_new_entities(entity, ner):
+    
+    potential_artist, confidence_score = entity['word'], entity['score']
+    
+    new_entities = []
+    is_present= False
+    
+    with open(ARTISTS_DB, encoding="utf8") as file:
+        artists_db = file.read().split("\n")
+        file.close()
+    
+    for artist in artists_db:
+        if artist+' ' in potential_artist or artist+',' in potential_artist or artist+'/' in potential_artist:
+            #logger.info(f"Artist present in parts of sentence : {artist}, {potential_artist}")
+            print(f"Artist present in parts of sentence : {artist}, {potential_artist}")
+            new_words = [artist,potential_artist.replace(artist,"").strip("-&")]
+            for word in new_words:
+                try:
+                    new_entities.append(ner(word)[0])
+                except:
+                    pass
+                
+            is_present= True
+            
+    del potential_artist, confidence_score 
+    return is_present, new_entities
+
+def process_new_entities(new_entities, ner, event_title, output):
+    
     for new_entity in new_entities:
         
-        event_info, label, confidence_score = new_entity['word'], new_entity['entity_group'], new_entity['score']
+        label= new_entity['entity_group']
         
-        if label == 'MISC' and confidence_score < 0.70:
-            pass
+        if label == 'PER':
+            output = check_person(new_entity, output)
+        elif label == 'LOC':
+            output = check_location(new_entity, output)
+        if label == 'ORG':
+            output = check_org(new_entity, output)
+        elif label == 'DATE':
+            output['date'].append(new_entity['word'])
+        elif label == 'MISC':
+            output = check_misc(new_entity, ner, event_title, output)
 
-        elif label != 'DATE':
-            is_present = check_db(new_entity, ner, mode='inner')
-            
-            if is_present:
-                if confidence_score > 0.60:
-                    output['artists'].append(event_info)
-            else:
-                output = assign_labels(new_entity,output)
-        else:
-            output['date'].append(event_info)
-            
-    del event_info, label, confidence_score
-    return output 
+        del label
+        
+    output = remove_duplicates(output)
+    return output
 
 def remove_duplicates(output):
     # removes duplicates from final output
@@ -165,46 +224,33 @@ def remove_duplicates(output):
             
     return output
 
-def check_entities(entities, ner, sample):
-    # checks, filters and assigns labels to extracted entities
+def check_entities(entities, ner, event_title):
+    
     output = {
-        'event_name': sample, #returning event name to user
-        'artists':[],  # to be filled with artists lineup
-        'events':[],   # to be filled with event details if available
-        'location':[], # to be filled with location details if available
-        'date':[]      # to be filled with date and time if available
+        'event_name': event_title, # returning event name to user
+        'artists':[],              # to be filled with artists lineup
+        'event_info':[],           # to be filled with event details if available
+        'location':[],             # to be filled with location details if available
+        'date':[],                 # to be filled with date and time if available
+        'related_keywords':[]      # to be filled with unclassified keywords
     }
     
     for entity in entities:
         
-        event_info, label, confidence_score = entity['word'], entity['entity_group'], entity['score']
-        logger.info(f"Entity: {entity}")
-        if label == 'MISC' and confidence_score < 0.70:
-            pass
+        label= entity['entity_group']
         
-        elif label != 'DATE':
-            is_present, is_weird, new_entities = check_db(entity, ner, mode='outer')
-            
-            if is_present:
-                if confidence_score > 0.60:
-                    output['artists'].append(event_info)
-                    logger.info(f" is present in db with confidence score > 60% : {event_info}")
-                    #print("is present", entity['word'])
-                
-            elif is_weird:
-                #print(new_entities)
-                logger.info(f"New Entities found: {new_entities}")
-                output = process_new_entities(new_entities, ner, output)
-                
-            else:
-                output = assign_labels(entity,output)
-                logger.info(f"Assigned labels via assign_labels: {event_info}")
-                #print("assign labels", entity['word'])
-                
-        else:
-            output['date'].append(event_info)
-            
-        del event_info, label, confidence_score
-    logger.info("---------------------------------------------------------------------------------------------------------------------")
+        if label == 'PER':
+            output = check_person(entity, output)
+        elif label == 'LOC':
+            output = check_location(entity, output)
+        if label == 'ORG':
+            output = check_org(entity, output)
+        elif label == 'DATE':
+            output['date'].append(entity['word'])
+        elif label == 'MISC':
+            output = check_misc(entity, ner, event_title, output, mode='outer')
+
+        del label
+        
     output = remove_duplicates(output)
     return output
