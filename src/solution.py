@@ -64,13 +64,8 @@ if __name__ == '__main__':
     now = datetime.now()
     dt_string = now.strftime("%d%m%Y_%H%M%S")
 
-    with open(f"./outputs/{dt_string}_artists_events.json", "w") as final:
+    with open(f"./outputs/{dt_string}_artists_events.json", "w", encoding='utf-8') as final:
         json.dump(out, final, indent = 5)
     print("JSON DUMP COMPLETE")
     stop = timeit.default_timer()
-    print('Time: ', stop - start) 
-  
-    
-
-
-
+    print('Time: ', stop - start)
