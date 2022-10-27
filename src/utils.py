@@ -102,7 +102,7 @@ def check_db(potential_artist):
 
 
 def check_person(entity, output):
-    # function to PER entities, not capable of extracting new entities
+    # function to check PER entities, not capable of extracting new entities
     potential_artist, confidence_score = entity['word'], entity['score']
     database_check = check_db(potential_artist)
     
@@ -132,7 +132,7 @@ def check_person(entity, output):
 
     
 def check_location(entity, ner, event_title, output):
-    # function to LOC entities, capable of extracting new entities
+    # function to LOC check entities, capable of extracting new entities
 
     potential_location, confidence_score = entity['word'], entity['score']
     word_to_event_title_ratio = len(potential_location)/len(event_title)
@@ -169,7 +169,7 @@ def check_location(entity, ner, event_title, output):
 
 
 def check_org(entity, ner, event_title, output):
-    # function to ORG entities, capable of extracting new entities
+    # function to check ORG entities, capable of extracting new entities
 
     event_info, confidence_score = entity['word'], entity['score']
     word_to_event_title_ratio = len(event_info)/len(event_title)
@@ -210,7 +210,7 @@ def check_org(entity, ner, event_title, output):
 
 
 def check_misc(entity, ner, event_title, output, mode=None):
-    # function to MISC entities, capable of extracting new entities
+    # function to check MISC entities, capable of extracting new entities
 
     event_info, confidence_score = entity['word'], entity['score']
     word_to_event_title_ratio = len(event_info)/len(event_title)
