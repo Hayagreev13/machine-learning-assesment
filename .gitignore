@@ -3,3 +3,6 @@ models
 logs
 outputs
 data
+build
+dist
+src.egg-info
