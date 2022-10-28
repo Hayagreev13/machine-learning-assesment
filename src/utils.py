@@ -61,6 +61,7 @@ def check_entities(entities, ner, event_title):
             output = check_org(entity, ner, event_title, output)
         elif label == 'DATE':
             output['date'].append(entity['word'])
+            logger.info(f"Date classified: {entity['word']}")
         elif label == 'MISC':
             output = check_misc(entity, ner, event_title, output, mode='outer')
 
@@ -227,7 +228,7 @@ def check_misc(entity, ner, event_title, output, mode=None):
         
     elif database_check == 'distance' and confidence_score > 0.60:
         output['artists'].append(event_info)
-        logger.info(f"Organisation passed distance check and confidence > 0.60: {event_info}")
+        logger.info(f"Misc passed distance check and confidence > 0.60: {event_info}")
         
     elif confidence_score > 0.90:
         if word_to_event_title_ratio < 0.70:
@@ -342,6 +343,7 @@ def process_new_entities(new_entities, ner, event_title, output):
             output = check_org(new_entity, ner, event_title, output)
         elif label == 'DATE':
             output['date'].append(new_entity['word'])
+            logger.info(f"Date classified: {new_entity['word']}")
         elif label == 'MISC':
             output = check_misc(new_entity, ner, event_title, output)
 
