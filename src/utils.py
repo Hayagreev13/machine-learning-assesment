@@ -66,7 +66,7 @@ def check_entities(entities, ner, event_title):
             output = check_misc(entity, ner, event_title, output, mode='outer')
 
         del label
-        logger.info('-------------------------------------------------------------------------------------------------------------------')
+    logger.info('-------------------------------------------------------------------------------------------------------------------')
     output = remove_duplicates(output)
     return output
 
