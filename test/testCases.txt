@@ -1,0 +1,67 @@
+Test Keywords for test_solution.py
+
+GENERAL TESTS
+
+G1 - Artist not present in database.
+
+G2 - Same artist with different spelling.
+
+G3 - Same name meaning multiple things.
+
+G4 - Same first name, different last name for artists.
+
+G5 - Ensure update_db function works properly.
+
+G6 - Ensure clean_sentence function works properly.
+
+PER TESTS
+
+P1 - Persons present in database with method=='present'.
+
+P2 - Persons present in database with method=='distance'.
+
+P3 - Persons not present in database.
+
+LOC TESTS
+
+L1 - Behaviour when 'word_to_event_title' ratio is high.
+
+L2 - Confidence score is high.
+
+L3 - Is a location but resembles an artist's name.
+
+L4 - Is an artist with a location as thier name.
+
+L5 - Location present in database with method=='distance'.
+
+L6 - When locations are unclassified.
+
+ORG TESTS
+
+O1- Organisations present in database with method=='present'.
+
+O2 - Organisations present in database with method=='distance'.
+
+O3 - Organisations not present in database.
+
+O4 - Behaviour when 'word_to_event_title' ratio is high.
+
+O5 - When organisations are unclassified.
+
+MISC TESTS
+
+M1 - Misc present in database with method=='present'.
+
+M2 - Misc present in database with method=='distance'.
+
+M3 - Behaviour when 'word_to_event_title' ratio is high but new entities have not been found.
+
+M4 - Behaviour when 'word_to_event_title' ratio is high and new entities have been found.
+
+M5 - When confidence score is high.
+
+M6 - When misc are unclassified.
+
+DATE TESTS
+
+D1 - Whether dates, time, month are getting classified.
