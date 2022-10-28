@@ -82,5 +82,6 @@ A scoring system has been devised to measure the performance of the algorithm. I
 
 In the end for a given `event_title`, the score is given as (sum of scores received by the entities)/(total number of entities present).
 The cummulative sum of all the fractions for a test category is taken as its accuracy.
+In the `test_dict`, some titles maybe repeated to check the individual functionality of the labels and repeated score are ignored while calculating overall accuracy.
 
 The scores for `update_db` and `clean_sentence` are either 0 for not expected output and 0.5 for expected output to avoid bias to the whole calculation.
