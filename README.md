@@ -56,7 +56,7 @@ Additional data is needed for the improvement of the model. However, the model g
 
 The project was developed with the help of Anaconda, Jupyter Notebook and VSCode in a `python 3.9.` environment.
 
-#### Project Setup
+### Project Setup
 
 ```
 # create a virtual environment
