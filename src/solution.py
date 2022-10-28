@@ -4,7 +4,6 @@ from transformers import pipeline
 import os
 import os.path as osp
 import timeit
-import argparse
 import json
 from datetime import datetime
 
@@ -26,22 +25,22 @@ def extract_entities(event_title):
 
     return json_out
 
-if __name__ == '__main__':
-    """     parser = argparse.ArgumentParser(description="Information extraction from Event titles.")
-        parser.add_argument("event", action = 'store', type = str, nargs='+', 
-        default='Jan Beuving & Patrick Nederkoorn - Leuker Kunnen We Het Niet Maken', help="Enter event titles for information extraction!")
+""" if __name__ == '__main__':
+    parser = argparse.ArgumentParser(description="Information extraction from Event titles.")
+    parser.add_argument("event", action = 'store', type = str, nargs='+', 
+    default='Jan Beuving & Patrick Nederkoorn - Leuker Kunnen We Het Niet Maken', help="Enter event titles for information extraction!")
 
-        FLAGS  = parser.parse_args()
-        event_title = ' '.join(FLAGS.event)
+    FLAGS  = parser.parse_args()
+    event_title = ' '.join(FLAGS.event)
 
-        start = timeit.default_timer()
+    start = timeit.default_timer()
 
-        print(event_title)
-        json_out = extract_entities(event_title)
-        print(json_out)
+    print(event_title)
+    json_out = extract_entities(event_title)
+    print(json_out)
 
-        stop = timeit.default_timer()
-        print('Time taken: ', stop - start)  """
+    stop = timeit.default_timer()
+    print('Time taken: ', stop - start)
 
     with open("./data/event_titles.txt", encoding="utf8") as file:
         events = file.read().split("\n")
@@ -68,4 +67,4 @@ if __name__ == '__main__':
         json.dump(out, final, indent = 5)
     print("JSON DUMP COMPLETE")
     stop = timeit.default_timer()
-    print('Time: ', stop - start)
+    print('Time: ', stop - start) """
