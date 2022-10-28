@@ -24,7 +24,6 @@ $wingin’ Utter$
 12 Stones
 1200 Micrograms
 12th Planet
-13
 13 & God
 1349
 13th Floor Elevators
@@ -100,6 +99,7 @@ $wingin’ Utter$
 702
 7L & Esoteric
 7Б
+7B
 7раса
 8 Bit Weapon
 808 State
@@ -285,7 +285,6 @@ Action Action
 Action Bronson
 Active Child
 Actress
-Ada
 Adagio
 Adam Ant
 Adam Beyer
@@ -335,7 +334,6 @@ Adventure Club
 Ady Suleiman
 Aeoliah
 Aeon
-Aer
 Aereogramme
 Aero Chord
 Aeroplane
@@ -393,7 +391,6 @@ Ailee
 Aim
 Aimee Mann
 Aina
-Air
 Air Formation
 Air France
 Air Supply
@@ -416,7 +413,6 @@ Akcent
 Akeboshi
 Akercocke
 Akhenaton
-Aki
 Akira
 Akira Kiteshi
 Akissforjersey
@@ -1323,7 +1319,7 @@ BRNS
 BROCKHAMPTON
 BSOD
 BSW
-BT
+BTS
 BUCK-TICK
 BUMP OF CHICKEN
 BURNS
@@ -1688,7 +1684,6 @@ Beware of Safety
 Beyoncé
 Bezerra Da Silva
 Bhad Bhabie
-BiS
 Biagio Antonacci
 Bianca Del Rio
 Bibio
@@ -6011,7 +6006,6 @@ Girl Talk
 Girl Unit
 Girlicious
 Girlpool
-Girls
 Girls Against Boys
 Girls Aloud
 Girls Can't Catch
@@ -11313,6 +11307,7 @@ OSI
 OST
 OV7
 OVERWERK
+Oaktree
 Oasis
 Oathbreaker
 Oatmello
@@ -13550,7 +13545,6 @@ Shawn Mullins
 Shawnna
 Shawty Lo
 Shayne Ward
-She
 She & Him
 She Keeps Bees
 She Wants Revenge
@@ -13930,7 +13924,6 @@ Solomun
 Solu Music
 Solvent
 Soma Sonic
-Some Girls
 Someone Still Loves You Boris Yeltsin
 Something Corporate
 Something for Kate
@@ -14597,7 +14590,6 @@ Tag Team
 Tahiti 80
 Taio Cruz
 Taj Mahal
-Take
 Take 6
 Take That
 Taken by Trees
@@ -16993,7 +16985,6 @@ Webb Pierce
 Webbie
 Wednesday 13
 Weedeater
-Weekend
 Weekend Players
 Ween
 Weeping Willows
