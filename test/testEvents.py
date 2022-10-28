@@ -59,7 +59,7 @@ test_dict = {
     'M1':["First Aid Kit | Listening Party", "Royale Saturdays: Lost Frequencies | 2.24.18", "The Dire Straits Experience",
     "SHINE Green Velvet, Layton Giordani & Eclair Fifi", "Yellow Claw - SA 28.04. - Prater DOME Vienna"],
 
-    'M2':["Peja/Slums Attack 03/03/18 Malbork, Dolek Klub", "Modern Life Is War • Cro-Mags • PARIS • 22 Juin 2018", "Metalmania - Metalica Show",
+    'M2':["Peja/Slums Attack 03/03/18 Malbork, Dołek Klub", "Modern Life Is War • Cro-Mags • PARIS • 22 Juin 2018", "Metalmania - Metalica Show",
     "Stick To Your Guns & Being As An Ocean – Brisbane Lic AA", "Berlin And The Beat/ Sa, 24.3./ Spindler&Klatt"],
 
     'M3':["Clara Luzia 'When I Take To The Streets Tour 2018'", "Future Ritual II", "Interment * I Am Destruction * Gruesome Fate",
@@ -77,7 +77,7 @@ test_dict = {
     "San Diego, California Full Day Experiential Workshop"],
 
     'D1':["Dying Fetus and Thy Art Is Murder at The Crofoot Ballroom 3/20", "Kiss All Hipsters | Vintage Fangs | Melkweg A'dam | Sat Jan 13",
-    "Peja/Slums Attack 03/03/18 Malbork, Dolek Klub", "Gorillaz live a Lucca • 12 luglio", "Lytos en Barcelona - 7:11 tour",
+    "Peja/Slums Attack 03/03/18 Malbork, Dołek Klub", "Gorillaz live a Lucca • 12 luglio", "Lytos en Barcelona - 7:11 tour",
     "Royale Saturdays: Lost Frequencies | 2.24.18", "Paramore Pre & After Party - 50% Off Drinks Before 8pm",
     "Ania Dąbrowska - The Best Of, Klub Stodoła, 15.04.2018", "Boosie Badazz with Webbie & Yung Bleu March 23 at The Cotillion"]
 
