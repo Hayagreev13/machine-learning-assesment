@@ -2,7 +2,7 @@
 
 Every month, there are thousands of events active on TicketSwap websites. These events range from music festivals to concerts to sporting events, stand up comedy shows and more. To help our users find the events they would like to attend, we try to extract the event lineup, as well as any additional information, from the event titles. 
 
-## Part 1
+## Part 1: Building a line up extracting model!
 
 Leveraging the CamemBERT huggingface transformers model, a high precision NER model is built to extract entities from a given event title.
 Various cases have been identified and addressed during the development of the model to ensure high quality information extraction.
@@ -13,16 +13,14 @@ These additional information can provide an edge over the competitors in helping
 
 The extraction and classification of entities are done after vigourous checking with the help of confidence scores, entity recognition labels along with human intelligence.
 
-## Part 2
+## Part 2: Connecting the model with other Microservices!
 
 A RESTful API using FastAPI has been developed around the entity recognition model which can integrated with other microservices on demand.
 FastAPI was used because of its exceptional speed, countless functionalities and ease of use.
 
 The solution pretty much remains the same between real-time and offline batch job predictions. As the API takes in a JSON file, the only difference between the two types will be either to take in a string or a list of strings. However, the API has been developed to address both the problems where it can be triggered to a real-time prediciton as well as batch jobs on demand, only a matter of how the pipeline is integrated. More information regarding the input batch files will be helpful to optimise the solution.
 
-## Part 3
-
-### Convincing other teams!
+## Part 3: Other teams!
 
 The approach taken to develop this model was to maximise information and minimise redundant words. But language is tricky and it can be hard for humans as well, let alone machines. However, care was taken to address this problem and emphasize out aim to maximise information. This was done through:
 
@@ -90,9 +88,4 @@ python src/save_model.py
 python src/app.py
 ```
 
-## Handing in the assessment
-Remember, it's important that you clone this repo before starting and do as many commits as needed, as clear as possible. You will not have push permissions to this repo, so you will have to do it in your own git repository (either local or using your own github account). When you're finished developing the application and did all the git commits, you can zip the entire folder (don't forget the .git), and send it to us in reply of the mail you got with this assessment. If there are issues sending the zip file, please use a service like https://wetransfer.com to upload the zip file there and send us a link to download the files.
-
-Please, do not share the results of this assignment with anyone.
-
-Best of luck to you!
+If you have made it till this far, Thank You for reading! Good Day!

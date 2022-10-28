@@ -1,6 +1,6 @@
 # Testing the solution
 
-A total of 29 tests have been conducted to check the behaviour of the model developed and to get a sense of accuracy for the classfied labels: PER, LOC, ORG, MISC, DATE. The python module unittest has not been used due to its limited functionality. All tests have been aimed to invoke certain functions relating to particular labels to check their functionality.
+A total of 25 tests have been conducted to check the behaviour of the model developed and to get a sense of accuracy for the classfied labels: PER, LOC, ORG, MISC, DATE. The python module unittest has not been used due to its limited functionality. All tests have been aimed to invoke certain functions relating to particular labels to check their functionality.
 
 The tests have been categorized into 5 categories namely:
 
@@ -21,8 +21,8 @@ These include the folowing cases:
 PER tests are conducted to understand probability of an entity with label PER being classified properly.
 These include the folowing cases:
 
-* Persons present in database with method=='present'.
-* Persons present in database with method=='distance'.
+* Persons present in database with `method=='present'`.
+* Persons present in database with `method=='distance'`.
 * Presons not present in database.
 
 From the third test case, we can infer what will happen to persons with high confidence scores and which persons are unclassified.
@@ -38,7 +38,7 @@ These include the folowing cases:
 * Confidence score is high.
 * Is a location but resembles an artist's name.
 * Is an artist with a location as thier name.
-* Location present in database with method=='distance'.
+* Location present in database with `method=='distance'`.
 * When locations are unclassified.
 
 ## ORG tests
@@ -46,8 +46,8 @@ These include the folowing cases:
 ORG tests are conducted to understand probability of an entity with label ORG being classified properly.
 These include the folowing cases:
 
-* Organisations present in database with method=='present'.
-* Organisations present in database with method=='distance'.
+* Organisations present in database with `method=='present'`.
+* Organisations present in database with `method=='distance'`.
 * Organisations not present in database.
 * Behaviour when `word_to_event_title` ratio is high.
 * When organisations are unclassified.
@@ -57,8 +57,8 @@ These include the folowing cases:
 MISC tests are conducted to understand probability of an entity with label MISC being classified properly.
 These include the folowing cases:
 
-* Misc present in database with method=='present'.
-* Misc present in database with method=='distance'.
+* Misc present in database with `method=='present'`.
+* Misc present in database with `method=='distance'`.
 * Behaviour when `word_to_event_title` ratio is high but new entities have not been found.
 * Behaviour when `word_to_event_title` ratio is high and new entities have been found.
 * When confidence score is high.
@@ -80,8 +80,6 @@ A scoring system has been devised to measure the performance of the algorithm. I
 * 0.5 - entity recognition and wrong classification
 * 1 - entity recognition and correct classification
 
-In the end for a given `event_title`, the score is given as (sum of scores received by the entities)/(total number of entities present).
+In the end for a given `event_title`, the overall score is given as (sum of scores received by the entities)/(total number of entities present). The funtional score of the label is calculated as (sum of scores received by the entities using the test function)/(total number of entities using the test function).
 The cummulative sum of all the fractions for a test category is taken as its accuracy.
 In the `test_dict`, some titles maybe repeated to check the individual functionality of the labels and repeated score are ignored while calculating overall accuracy.
-
-The scores for `update_db` and `clean_sentence` are either 0 for not expected output and 0.5 for expected output to avoid bias to the whole calculation.
