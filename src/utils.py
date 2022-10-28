@@ -89,7 +89,7 @@ def check_db(potential_artist):
         
     if potential_artist in artists_db:
         logger.info(f"Present in DB: {potential_artist}")
-        method = 'distance'
+        method = 'present'
 
     else:
         for artists in artists_db:
