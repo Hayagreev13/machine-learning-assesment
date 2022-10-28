@@ -5,9 +5,9 @@ Every month, there are thousands of events active on TicketSwap websites. These 
 ## Part 1: Building a line up extracting model!
 
 Leveraging the CamemBERT huggingface transformers model, a high precision NER model is built to extract entities from a given event title.
-Various cases have been identified and addressed during the development of the model to ensure high quality information extraction.
+Various problematic cases have been identified and addressed during the development of the model to ensure high quality information extraction.
 
-Apart from artist names, event information such as location, date, time, month and other relevant information regarding the events have also been extracted and classified to their suitable label.
+Apart from artist names, event information such as location, date, time, month and other relevant information regarding the events have also been extracted and classified best to their suitable label.
 
 These additional information can provide an edge over the competitors in helping the company prepare for the event in departments such as marketing, ticketing, planning, prospecting, etc.
 
@@ -22,23 +22,18 @@ The solution pretty much remains the same between real-time and offline batch jo
 
 ## Part 3: Other teams!
 
-The approach taken to develop this model was to maximise information and minimise redundant words. But language is tricky and it can be hard for humans as well, let alone machines. However, care was taken to address this problem and emphasize out aim to maximise information. This was done through:
+The approach taken to develop this model was to maximise information and minimise redundant words. But language is tricky and it can be hard for humans as well, let alone machines. However, care was taken to address this problem and emphasize our aim to maximise information. This was done through:
 
 * Checking entities based on their confidence score through the ranges 90-100%, 90-60%.
 * For each of the confidence interval, numerous checks were placed to ensure correct recognition and classification.
 * As the confidence scores dipped, the number of checks increased to balance the quality.
 * Each of the checks have undergone vigourous testing to understand the behaviour of their funtionality.
 
-The detailed description of the tests are given in the test folder of the repository. The results of the tests are tabularized below:
+The detailed description of the tests are given in the test folder of this repository. The results of the tests are tabularized below:
 
-| Tests   	| Accuracy 	|
-|---------	|----------	|
-| General 	| 83.14%   	|
-| PER     	| 91.67%   	|
-| LOC     	| 63.12%   	|
-| ORG     	| 79.19%   	|
-| MISC    	| 80.1%    	|
-| DATE    	| 72.22%   	|
+| Tests    | General | PER    | LOC    | ORG    | MISC  | DATE   |
+|----------|---------|--------|--------|--------|-------|--------|
+| Accuracy | 83.14%  | 91.67% | 63.12% | 79.19% | 80.1% | 72.22% |
 
 Finally, the overall accuracy for the model was calculated as 76.7%.
 It has to be taken into account that accuracy for this model is calculated based on its capability to recognise and classify entities.
@@ -54,12 +49,12 @@ The docker image can be deployed in a Kubernetes cluster and used as required by
 
 ### Additional data
 
-Additional data is needed for the improvement of the model. However, the model gets better with each prediciton on its own, as it stores the artists data in its database if the artist inst present already.
+Additional data is needed for the improvement of the model. However, the model gets better with each prediciton on its own, as it stores the artists data in its database if the artist is not present already.
 
 
 ## Project Implementation
 
-The project was developed with the help of Anaconda prompt, Jupyter Notebook and VSCode in a `python 3.9.` environment.
+The project was developed with the help of Anaconda, Jupyter Notebook and VSCode in a `python 3.9.` environment.
 
 #### Project Setup
 
@@ -88,4 +83,4 @@ python src/save_model.py
 python src/app.py
 ```
 
-If you have made it till this far, Thank You for reading! Good Day!
+If you have made it this far, Thank You for reading! Good Day!
