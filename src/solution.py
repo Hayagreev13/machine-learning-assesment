@@ -1,7 +1,15 @@
 from transformers import AutoTokenizer, AutoModelForTokenClassification
 from transformers import pipeline
 
+import os
+import json
+import os.path as osp
+import timeit
+from datetime import datetime
+
 import utils
+
+EVENTS_DB = './data/event_titles.txt'
 
 # Solution adopted from --> https://huggingface.co/Jean-Baptiste/camembert-ner-with-dates
 '''start = timeit.default_timer()'''
@@ -18,3 +26,32 @@ def extract_entities(event_title):
     #print("Entities:",entities)
 
     return json_out
+
+# function to test model with event_titles database
+def extract_from_file(file_path):
+
+    with open(file_path, encoding="utf8") as file:
+        events = file.read().split("\n")
+        file.close() 
+
+    out = []
+    start = timeit.default_timer()
+    count = 0
+    for event in events:
+        out.append(extract_entities(event))
+        count = count + 1
+        if count%100 == 0:
+            print(f"Events done: {count}/{len(events)}")
+
+    save_path = f'./outputs/'
+    if not osp.exists(save_path):
+        os.mkdir(save_path)
+
+    now = datetime.now()
+    dt_string = now.strftime("%d%m%Y_%H%M%S")
+
+    with open(f"./outputs/{dt_string}_artists_events.json", "w", encoding='utf-8') as final:
+        json.dump(out, final, indent = 5)
+    print("JSON DUMP COMPLETE")
+    stop = timeit.default_timer()
+    print('Time: ', stop - start) 
