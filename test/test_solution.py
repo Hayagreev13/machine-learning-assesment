@@ -1,4 +1,6 @@
+import os
 import json
+import os.path as osp
 from datetime import datetime
 
 from src.solution import extract_entities
@@ -20,7 +22,11 @@ for key in test_dict.keys():
 now = datetime.now()
 dt_string = now.strftime("%d%m%Y_%H%M%S")
 
-with open(f"outputs/{dt_string}_test_artists_events.json", "w", encoding='utf-8') as final:
+save_path = f'./outputs/'
+if not osp.exists(save_path):
+    os.mkdir(save_path)
+
+with open(f"./outputs/{dt_string}_test_artists_events.json", "w", encoding='utf-8') as final:
     json.dump(test_output, final, indent = 6)
 
 print("JSON DUMP COMPLETE")
