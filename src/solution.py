@@ -55,3 +55,6 @@ def extract_from_file(file_path):
     print("JSON DUMP COMPLETE")
     stop = timeit.default_timer()
     print('Time: ', stop - start) 
+
+# to test the code, uncomment and run the below line
+# extract_from_file(EVENTS_DB)
