@@ -39,7 +39,7 @@ Finally, the overall accuracy for the model was calculated as 76.7%.
 It has to be taken into account that accuracy for this model is calculated based on its capability to recognise and classify entities.
 
 As for the recognition capability of the model, the accuracy was calculated as 97.32%.
-Classification of entities into their respective label is tricky due to the nuances involed with language.
+Classification of entities into their respective label is tricky due to the nuances involved with language.
 Nevertheless, with human assistance and constant data collection, both the accuracies can be improved.
 
 ### Approaching other teams!

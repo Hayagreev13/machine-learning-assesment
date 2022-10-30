@@ -1,6 +1,5 @@
 from Levenshtein import distance as levenshtein_distance
 
-import re
 import os
 import os.path as osp
 import logging
