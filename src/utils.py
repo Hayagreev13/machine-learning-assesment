@@ -136,27 +136,29 @@ def check_location(entity, ner, event_title, output):
 
     potential_location, confidence_score = entity['word'], entity['score']
     word_to_event_title_ratio = len(potential_location)/len(event_title)
+
+    database_check = check_db(potential_location)
     
     if word_to_event_title_ratio > 0.80:
         is_present, new_entities = extract_new_entities(entity, ner, mode='low')
 
         if not is_present:
             output['location'].append(potential_location)
-            logger.info(f"Location classified with misc ratio > 0.80: {potential_location}")
+            logger.info(f"Location classified with WTER ratio > 0.80: {potential_location}")
 
         else:
             output = process_new_entities(new_entities, ner, event_title, output)
-            logger.info(f"Location processing new entities with misc ratio > 0.80: {new_entities}")        
+            logger.info(f"Location processing new entities with WTER ratio > 0.80: {new_entities}")        
     
     elif confidence_score > 0.70:
         output['location'].append(potential_location)
         logger.info(f"Location with confidence score >0.70: {potential_location}")
         
-    elif check_db(potential_location) == 'present':
+    elif database_check == 'present':
         output['artists'].append(potential_location)
         logger.info(f"Location present in artist DB: {potential_location}")
         
-    elif check_db(potential_location) == 'distance' and confidence_score > 0.60:
+    elif database_check == 'distance' and confidence_score > 0.60:
         output['event_info'].append(potential_location)
         logger.info(f"Location passing distance check in artist DB: {potential_location}")
         
@@ -164,7 +166,7 @@ def check_location(entity, ner, event_title, output):
         output['related_keywords'].append(potential_location)
         logger.info(f"Location unclassified: {potential_location}")
         
-    del potential_location, confidence_score
+    del potential_location, confidence_score, database_check
     return output
 
 
@@ -195,7 +197,7 @@ def check_org(entity, ner, event_title, output):
             
             if not is_present:
                 output['event_info'].append(event_info)
-                logger.info(f"Organisation classified with confidence > 0.70 and misc ratio > 0.80: {event_info}")
+                logger.info(f"Organisation classified with confidence > 0.70 and WTER ratio > 0.80: {event_info}")
                 
             else:
                 output = process_new_entities(new_entities, ner, event_title, output)
@@ -240,7 +242,7 @@ def check_misc(entity, ner, event_title, output, mode=None):
             
             if not is_present:
                 output['event_info'].append(event_info)
-                logger.info(f"Misc classified with confidence > 0.90 and misc ratio > 0.70: {event_info}")
+                logger.info(f"Misc classified with confidence > 0.90 and WTER ratio > 0.70: {event_info}")
                 
             else:
                 output = process_new_entities(new_entities, ner, event_title, output)
