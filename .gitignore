@@ -7,3 +7,4 @@ build
 dist
 src.egg-info
 hayagreev-ml_assessment.zip
+__pycache__
