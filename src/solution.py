@@ -12,7 +12,6 @@ import utils
 EVENTS_DB = './data/event_titles.txt'
 
 # Solution adopted from --> https://huggingface.co/Jean-Baptiste/camembert-ner-with-dates
-'''start = timeit.default_timer()'''
 
 tokenizer = AutoTokenizer.from_pretrained("./models/tokenizer/")
 model = AutoModelForTokenClassification.from_pretrained("./models/model/")

@@ -287,7 +287,7 @@ def split_sentence(sentence):
 def extract_new_entities(entity, ner, mode=None):
     # function to extract new entites from exisiting entities
     # mode = None is used to split the sentence and check the words in the sentence
-    # mode = low is used to check split words and to check if artists are present in parts of the sentence
+    # mode = low is used to check low confidence scores and unable to split sentences further with split_sentence function
 
     potential_artist, confidence_score = entity['word'], entity['score']
     
@@ -305,8 +305,8 @@ def extract_new_entities(entity, ner, mode=None):
                 pass
         
     elif mode=='low'and len(split) < 1:
-        
-        with open("data/artists_db.txt", encoding="utf8") as file:
+
+        with open(ARTISTS_DB, encoding="utf8") as file:
             artists_db = file.read().split("\n")
             file.close()
 

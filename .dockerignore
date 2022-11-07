@@ -3,3 +3,4 @@ dist
 logs
 output
 src.egg-info
+test
