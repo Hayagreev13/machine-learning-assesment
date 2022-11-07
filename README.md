@@ -82,5 +82,7 @@ python src/save_model.py
 # run the api app.py
 python src/app.py
 ```
+To test the working of the API, after running the command, go to the url http://127.0.0.1:8000/docs .
+Give a string for the real-time process and a list of strings for the batch process.
 
 If you have made it this far, Thank You for reading! Good Day!
