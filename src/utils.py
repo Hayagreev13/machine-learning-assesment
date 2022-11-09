@@ -83,7 +83,7 @@ def check_db(potential_artist):
     # function to check database and calculate distance between 2 words using levenshtein distance
     method = None
     
-    with open("data/artists_db.txt", encoding="utf8") as file:
+    with open(ARTISTS_DB, encoding="utf8") as file:
         artists_db = file.read().split("\n")
         file.close() 
         
