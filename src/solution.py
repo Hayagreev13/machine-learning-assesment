@@ -19,15 +19,20 @@ ner = pipeline('ner', model=model, tokenizer=tokenizer, aggregation_strategy="si
 
 def extract_entities(event_title):
 
-    if type(event_title) != str:
-        raise ValueError('Input type not a string.')
-    else:
+    output = {
+    'event_name': event_title, # returning event name to user
+    'artists':[],              # to be filled with artists lineup
+    'event_info':[],           # to be filled with event details if available
+    'location':[],             # to be filled with location details if available
+    'date':[],                 # to be filled with date and time if available
+    'related_keywords':[]      # to be filled with unclassified keywords
+}
+    if len(event_title) !=0:
         event_title = utils.clean_sentence(event_title)
         entities = ner(event_title)
-        json_out = utils.check_entities(entities, ner, event_title)
-        #print("Entities:",entities)
+        json_out = utils.check_entities(entities, ner, event_title, output, mode='outer')
 
-        return json_out
+    return json_out
 
 # function to test model with event_titles database
 def extract_from_file(file_path):

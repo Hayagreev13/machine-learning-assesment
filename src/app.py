@@ -1,8 +1,9 @@
 import uvicorn
 from fastapi import FastAPI
-from pydantic import BaseModel
 
 from solution import extract_entities
+
+ARTISTS_DB = './data/artists_db.txt'
 
 app = FastAPI()
 
